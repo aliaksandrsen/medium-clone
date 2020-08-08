@@ -1,11 +1,30 @@
-import React, { useState, useRef } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const emailRef = useRef(null);
-  console.log("Authentication -> emailRef", emailRef.current?.value);
+  const [isSubmetting, setIsSubmetting] = useState(false);
+
+  useEffect(() => {
+    if (!isSubmetting) return;
+    axios("https://conduit.productionready.io/api/users/login", {
+      method: "post",
+      user: {
+        email: "ewewfwecefew@gmail.com",
+        password: "234rcrcr",
+      },
+    })
+      .then((res) => {
+        console.log("res", res);
+        setIsSubmetting(false);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setIsSubmetting(false);
+      });
+  }, [email, password, isSubmetting]);
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -18,6 +37,7 @@ export const Authentication = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submit");
+    setIsSubmetting(true);
   };
 
   return (
@@ -36,9 +56,8 @@ export const Authentication = () => {
                     type="email"
                     className="form-control form-control-lg"
                     placeholder="Email"
-                    // value={email}
-                    // onChange={onChangeEmail}
-                    ref={emailRef}
+                    value={email}
+                    onChange={onChangeEmail}
                   />
                 </fieldset>
 
@@ -55,6 +74,7 @@ export const Authentication = () => {
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
+                  disabled={isSubmetting}
                 >
                   Sing in
                 </button>
