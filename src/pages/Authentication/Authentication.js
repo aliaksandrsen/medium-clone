@@ -1,30 +1,12 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { useFetch } from "../../hooks/useFetch";
 
 export const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSubmetting, setIsSubmetting] = useState(false);
-
-  useEffect(() => {
-    if (!isSubmetting) return;
-    axios("https://conduit.productionready.io/api/users/login", {
-      method: "post",
-      user: {
-        email: "ewewfwecefew@gmail.com",
-        password: "234rcrcr",
-      },
-    })
-      .then((res) => {
-        console.log("res", res);
-        setIsSubmetting(false);
-      })
-      .catch((error) => {
-        console.log("error", error);
-        setIsSubmetting(false);
-      });
-  }, [email, password, isSubmetting]);
+  const [{ response, isLoading, error }, doFetch] = useFetch("/users/login");
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -37,7 +19,13 @@ export const Authentication = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submit");
-    setIsSubmetting(true);
+    doFetch({
+      method: "post",
+      user: {
+        email,
+        password,
+      },
+    });
   };
 
   return (
@@ -74,7 +62,7 @@ export const Authentication = () => {
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
-                  disabled={isSubmetting}
+                  disabled={isLoading}
                 >
                   Sing in
                 </button>
