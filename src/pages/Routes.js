@@ -11,12 +11,8 @@ export const Routes = () => {
       <Route path="/" exact>
         <GlobalFeed />
       </Route>
-      <Route path="/login">
-        <Authentication />
-      </Route>
-      <Route path="/register">
-        <Authentication />
-      </Route>
+      <Route path="/login" component={Authentication} />
+      <Route path="/register" component={Authentication} />
       <Route path="/articles/:slug">
         <Article />
       </Route>

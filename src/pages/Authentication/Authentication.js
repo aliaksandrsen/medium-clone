@@ -3,10 +3,22 @@ import { Link } from "react-router-dom";
 
 import { useFetch } from "../../hooks/useFetch";
 
-export const Authentication = () => {
+export const Authentication = (props) => {
+  const isLogin = props.match.path === "/login";
+  const pageTitle = isLogin ? "Sing In" : "Sing Up";
+  const descriptionLink = isLogin ? "/register" : "/login";
+  const descriptionText = isLogin ? "Need an account?" : "Have an account?";
+  const apiUrl = isLogin ? "/users/login" : "/users";
+
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [{ response, isLoading, error }, doFetch] = useFetch("/users/login");
+
+  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+
+  const onChangeUsername = (event) => {
+    setUsername(event.target.value);
+  };
 
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -18,12 +30,19 @@ export const Authentication = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submit");
+
+    const user = isLogin
+      ? { email, password }
+      : {
+          email: email,
+          password: password,
+          username: username,
+        };
+
     doFetch({
       method: "post",
-      user: {
-        email,
-        password,
+      data: {
+        user,
       },
     });
   };
@@ -33,12 +52,26 @@ export const Authentication = () => {
       <div className="container page">
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
-            <h1 className="text-xs-center">Login</h1>
+            <h1 className="text-xs-center">{pageTitle}</h1>
+
             <p className="text-xs-center">
-              <Link to="/register">Need an account?</Link>
+              <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
+
             <form onSubmit={handleSubmit}>
               <fieldset>
+                {!isLogin && (
+                  <fieldset className="form-group">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Username"
+                      value={username}
+                      onChange={onChangeUsername}
+                    />
+                  </fieldset>
+                )}
+
                 <fieldset className="form-group">
                   <input
                     type="email"
@@ -64,7 +97,7 @@ export const Authentication = () => {
                   type="submit"
                   disabled={isLoading}
                 >
-                  Sing in
+                  {pageTitle}
                 </button>
               </fieldset>
             </form>

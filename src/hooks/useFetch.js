@@ -2,7 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export const useFetch = (url) => {
-  const baseUrl = "https://conduit.productionready.io/api";
+  const BASE_URl = "https://conduit.productionready.io/api";
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
@@ -14,17 +15,18 @@ export const useFetch = (url) => {
   };
 
   useEffect(() => {
-    if (!setIsLoading) return;
-    axios(`${baseUrl}${url}`, options)
+    if (!isLoading) return;
+
+    axios(`${BASE_URl}${url}`, options)
       .then((res) => {
+        setResponse(res.data);
         setIsLoading(false);
-        setResponse(res);
       })
       .catch((error) => {
-        setIsLoading(false);
         setError(true);
+        setIsLoading(false);
       });
-  }, [isLoading, url, options]);
+  }, [isLoading]);
 
-  return [{ isLoading, response, error }, doFetch];
+  return [{ response, isLoading, error }, doFetch];
 };
