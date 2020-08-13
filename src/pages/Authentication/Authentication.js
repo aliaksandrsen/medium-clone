@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
-import { useFetch } from "../../hooks/useFetch";
+import { useFetch } from '../../hooks/useFetch';
 
 export const Authentication = (props) => {
-  const isLogin = props.match.path === "/login";
-  const pageTitle = isLogin ? "Sing In" : "Sing Up";
-  const descriptionLink = isLogin ? "/register" : "/login";
-  const descriptionText = isLogin ? "Need an account?" : "Have an account?";
-  const apiUrl = isLogin ? "/users/login" : "/users";
+  const isLogin = props.match.path === '/login';
+  const pageTitle = isLogin ? 'Sing In' : 'Sing Up';
+  const descriptionLink = isLogin ? '/register' : '/login';
+  const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
+  const apiUrl = isLogin ? '/users/login' : '/users';
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
 
   const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
@@ -41,7 +41,7 @@ export const Authentication = (props) => {
         };
 
     doFetch({
-      method: "post",
+      method: 'post',
       data: {
         user,
       },
@@ -51,7 +51,7 @@ export const Authentication = (props) => {
   useEffect(() => {
     if (!response) return;
 
-    localStorage.setItem("token", response.user.token);
+    localStorage.setItem('token', response.user.token);
     setIsSuccessfullSubmit(true);
   }, [response]);
 

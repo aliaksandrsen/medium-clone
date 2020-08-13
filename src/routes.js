@@ -1,9 +1,9 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import { Article } from "./Article/Article";
-import { Authentication } from "./Authentication";
-import { GlobalFeed } from "./GlobalFeed/GlobalFeed";
+import { Article } from './pages/Article/Article';
+import { Authentication } from './pages/Authentication';
+import { GlobalFeed } from './pages/GlobalFeed/GlobalFeed';
 
 export const Routes = () => {
   return (

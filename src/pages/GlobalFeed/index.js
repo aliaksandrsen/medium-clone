@@ -1,3 +1,3 @@
-import { GlobalFeed } from "./GlobalFeed";
+import { GlobalFeed } from './GlobalFeed';
 
 export { GlobalFeed };

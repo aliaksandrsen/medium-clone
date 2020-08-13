@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 export const useFetch = (url) => {
-  const BASE_URl = "https://conduit.productionready.io/api";
+  const BASE_URl = 'https://conduit.productionready.io/api';
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
