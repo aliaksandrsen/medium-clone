@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { Routes } from './pages/Routes';
+import { Routes } from './routes';
 import { TopBar } from './components/TopBar';
 
 function App() {
