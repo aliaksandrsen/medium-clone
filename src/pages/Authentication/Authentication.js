@@ -16,8 +16,9 @@ export const Authentication = (props) => {
   const [password, setPassword] = useState('');
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
 
-  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+  const [{ response, isLoading }, doFetch] = useFetch(apiUrl);
   const [token, setToken] = useLocalStorage('token');
+  console.log('Authentication -> token', token);
 
   const onChangeUsername = (event) => {
     setUsername(event.target.value);
@@ -55,7 +56,7 @@ export const Authentication = (props) => {
 
     setToken(response.user.token);
     setIsSuccessfullSubmit(true);
-  }, [response]);
+  }, [response, setToken]);
 
   if (isSuccessfullSubmit) {
     return <Redirect to="/" />;
