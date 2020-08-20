@@ -4,17 +4,18 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Routes } from './routes';
 import { TopBar } from './components/TopBar';
+import { CurrentUserContextProvider } from './contexts/currentUser';
 
-function App() {
+const App = () => {
   return (
-    <div>
+    <CurrentUserContextProvider>
       <Router>
         <TopBar />
         <Routes />
       </Router>
-    </div>
+    </CurrentUserContextProvider>
   );
-}
+};
 
 ReactDOM.render(
   <React.StrictMode>
