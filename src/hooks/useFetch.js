@@ -23,7 +23,7 @@ export const useFetch = (url) => {
         setIsLoading(false);
       })
       .catch((error) => {
-        setError(true);
+        setError(error.response.data);
         setIsLoading(false);
       });
   }, [isLoading, options, url]);

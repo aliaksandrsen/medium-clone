@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
+import { CurrentUserContext } from '../../contexts/currentUser';
 import { useFetch } from '../../hooks/useFetch';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { CurrentUserContext } from '../../contexts/currentUser';
+import { BackendErrorMessages } from '../../components/BackendErrorMessages';
 
 export const Authentication = (props) => {
   const isLogin = props.match.path === '/login';
@@ -16,12 +17,11 @@ export const Authentication = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false);
-  const [{ response, isLoading }, doFetch] = useFetch(apiUrl);
+  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
   const [token, setToken] = useLocalStorage('token');
   const [currentUserState, setCurrentUserState] = useContext(
     CurrentUserContext
   );
-  console.log('Authentication -> currentUserState', currentUserState);
 
   const onChangeUsername = (event) => {
     setUsername(event.target.value);
@@ -85,6 +85,7 @@ export const Authentication = (props) => {
             </p>
 
             <form onSubmit={handleSubmit}>
+              {error && <BackendErrorMessages backendErrors={error.errors} />}
               <fieldset>
                 {!isLogin && (
                   <fieldset className="form-group">
