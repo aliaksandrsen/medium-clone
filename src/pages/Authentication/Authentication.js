@@ -62,8 +62,8 @@ export const Authentication = (props) => {
     setCurrentUserState((state) => {
       return {
         ...state,
-        isLoading: true,
-        isLoggedIn: false,
+        isLoading: false,
+        isLoggedIn: true,
         currentUser: response.user,
       };
     });
