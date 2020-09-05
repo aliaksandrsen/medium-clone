@@ -3,8 +3,11 @@ import { stringify } from 'query-string';
 
 import { useFetch } from '../../hooks/useFetch';
 import { Feed } from '../../components/Feed';
+import { PopularTags } from '../../components/PopularTags';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { getPaginator, LIMIT } from '../../utils';
+import { Loading } from '../../components/Loading';
+import { ErrorMessage } from '../../components/ErrorMessage';
 
 export const GlobalFeed = ({ location, match }) => {
   const { currentPage, offset } = getPaginator(location.search);
@@ -29,8 +32,8 @@ export const GlobalFeed = ({ location, match }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            {isLoading && <div>Loading...</div>}
-            {error && <div>Some error happened</div>}
+            {isLoading && <Loading />}
+            {error && <ErrorMessage />}
             {!isLoading && response && (
               <>
                 <Feed articles={response.articles} />
@@ -43,7 +46,9 @@ export const GlobalFeed = ({ location, match }) => {
               </>
             )}
           </div>
-          <div className="col-md-3">Popular tags</div>
+          <div className="col-md-3">
+            <PopularTags />
+          </div>
         </div>
       </div>
     </div>
