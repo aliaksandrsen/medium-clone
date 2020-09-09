@@ -1,3 +1,3 @@
-import { Pagination } from './Feed';
+import { Pagination } from './Pagination';
 
 export { Pagination };
