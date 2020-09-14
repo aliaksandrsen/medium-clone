@@ -15,9 +15,7 @@ export const Routes = () => {
       <Route path="/tags/:slug" component={TagFeed} />
       <Route path="/login" component={Authentication} />
       <Route path="/register" component={Authentication} />
-      <Route path="/articles/:slug">
-        <Article />
-      </Route>
+      <Route path="/articles/:slug" component={Article} />
     </Switch>
   );
 };
